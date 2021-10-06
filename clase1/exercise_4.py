@@ -13,3 +13,14 @@
 # ! wget "https://raw.githubusercontent.com/IEEESBITBA/Curso-Python/master/Curso_Analisis_de_Datos_Datos/Finanzas.xlsx"
 
 # Debes procesar las transferencias y actualizar el saldo de cada usuario (crear un nuevo archivo excel con los saldos actualizados)
+
+import pandas as pd
+
+df = pd.read_excel('Finanzas.xlsx', None)
+users = df['Usuarios'].set_index('Usuario')
+transfers = df['Transferencias']
+
+for _,transfer in transfers.iterrows():
+	users.loc[transfer['Receptor']]['Presupuesto'] += transfer['Monto']
+
+users.to_excel('usuarios_actualizados.xlsx')
